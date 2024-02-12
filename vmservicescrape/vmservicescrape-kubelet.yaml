@@ -1,0 +1,104 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  annotations:
+    meta.helm.sh/release-name: monitoring-stack
+    meta.helm.sh/release-namespace: monitoring
+  creationTimestamp: "2024-02-06T21:59:36Z"
+  generation: 1
+  labels:
+    app: kube-prometheus-stack-kubelet
+    app.kubernetes.io/instance: monitoring-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 40.1.2
+    chart: kube-prometheus-stack-40.1.2
+    heritage: Helm
+    release: monitoring-stack
+  name: monitoring-stack-kube-prom-kubelet
+  namespace: vm
+  resourceVersion: "326552917"
+  uid: 75966cd1-cb08-4316-98e0-aa3d9e65dccd
+spec:
+  endpoints:
+  - attach_metadata: {}
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    honorLabels: true
+    port: https-metrics
+    relabelConfigs:
+    - action: replace
+      sourceLabels:
+      - __metrics_path__
+      targetLabel: metrics_path
+    scheme: https
+    tlsConfig:
+      ca: {}
+      caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      cert: {}
+      insecureSkipVerify: true
+  - attach_metadata: {}
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    honorLabels: true
+    metricRelabelConfigs:
+    - action: drop
+      regex: container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)
+      sourceLabels:
+      - __name__
+    - action: drop
+      regex: container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)
+      sourceLabels:
+      - __name__
+    - action: drop
+      regex: container_memory_(mapped_file|swap)
+      sourceLabels:
+      - __name__
+    - action: drop
+      regex: container_(file_descriptors|tasks_state|threads_max)
+      sourceLabels:
+      - __name__
+    - action: drop
+      regex: container_spec.*
+      sourceLabels:
+      - __name__
+    - action: drop
+      regex: .+;
+      sourceLabels:
+      - id
+      - pod
+    path: /metrics/cadvisor
+    port: https-metrics
+    relabelConfigs:
+    - action: replace
+      sourceLabels:
+      - __metrics_path__
+      targetLabel: metrics_path
+    scheme: https
+    tlsConfig:
+      ca: {}
+      caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      cert: {}
+      insecureSkipVerify: true
+  - attach_metadata: {}
+    bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    honorLabels: true
+    path: /metrics/probes
+    port: https-metrics
+    relabelConfigs:
+    - action: replace
+      sourceLabels:
+      - __metrics_path__
+      targetLabel: metrics_path
+    scheme: https
+    tlsConfig:
+      ca: {}
+      caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      cert: {}
+      insecureSkipVerify: true
+  jobLabel: k8s-app
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubelet
+      k8s-app: kubelet

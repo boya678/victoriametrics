@@ -1,0 +1,1 @@
+helm upgrade --install --namespace vm --create-namespace vm vm/victoria-metrics-k8s-stack -f values.yaml

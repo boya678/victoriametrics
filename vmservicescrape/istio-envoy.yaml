@@ -1,0 +1,14 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
+metadata:
+  name: istio-envoy
+  namespace: vm
+spec:
+  jobLabel: "envoy-stats"
+  podMetricsEndpoints:
+    - port: http-envoy-prom
+      scheme: http
+      path: /stats/prometheus
+  namespaceSelector:
+    matchNames:
+    - ri-rba

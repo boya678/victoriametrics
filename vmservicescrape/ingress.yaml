@@ -1,0 +1,25 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: nginx-ingress
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.6.4
+  name: nginx-ingress-ingress-nginx-controller
+  namespace: vm
+spec:
+  endpoints:
+  - attach_metadata: {}
+    interval: 30s
+    port: metrics
+  namespaceSelector:
+    matchNames:
+    - ingress
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: nginx-ingress
+      app.kubernetes.io/name: ingress-nginx

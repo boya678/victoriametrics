@@ -1,0 +1,17 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: istiod
+  namespace: vm
+spec:
+  endpoints:
+    - attach_metadata: {}
+      port: http-monitoring
+      scheme: http
+  jobLabel: istiod
+  namespaceSelector:
+    matchNames:
+      - istio-system
+  selector:
+    matchLabels:
+      app: istiod
