@@ -731,12 +731,12 @@ kube-state-metrics:
 #################################################
 ## Component scraping the kubelets
 kubelet:
-  enabled: false
+  enabled: true
 
   # -- Enable scraping /metrics/cadvisor from kubelet's service
-  cadvisor: false
+  cadvisor: true
   # -- Enable scraping /metrics/probes from kubelet's service
-  probes: false
+  probes: true
   # spec for VMNodeScrape crd
   # https://docs.victoriametrics.com/operator/api.html#vmnodescrapespec
   spec:
